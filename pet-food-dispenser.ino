@@ -1,8 +1,6 @@
-#include <Key.h>
 #include <Keypad.h>
 #include <Servo.h>
 #include <LiquidCrystal.h>
-#include <EEPROM.h>
 
 #define CERRAR 0
 #define ABRIR 90
