@@ -52,7 +52,6 @@ void _foodDispenser()
 {
   _servoMotor.write(ABRIR);
   digitalWrite(LED, HIGH);
-  digitalWrite(PIEZO, LOW);
   messages[0] = "   Dispensando  ";
   messages[1] = "     Comida     ";
   _showMessageInLCDDisplay(messages);
@@ -62,9 +61,14 @@ void _setInitialStatus()
 {
   _servoMotor.write(CERRAR);
   digitalWrite(LED, LOW);
-  digitalWrite(PIEZO, HIGH);
   delay(600);
   _showMainMessageInLCDDisplay();
+  _reproduceMusic();
+}
+
+void _reproduceMusic()
+{
+  //TODO Pending to do
 }
 
 char _getKey()
