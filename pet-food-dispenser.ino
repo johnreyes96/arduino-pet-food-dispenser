@@ -116,7 +116,7 @@ void _updateMessageMuteOrUnmuteInLCD() {
   _messages[0] = "A: Dar alimento ";
   if (_isMute)
   {
-    _messages[1] = "B: Desmutear       ";
+    _messages[1] = "B: Desmutear    ";
   }
   else
   {
