@@ -113,7 +113,7 @@ void _showMainMessageInLCDDisplay()
   lcd.setCursor(0, 0);
   lcd.print("A: Para abrir   ");
   lcd.setCursor(0, 1);
-  lcd.print("B: Para cerrar  ");
+  lcd.print("                ");
 }
 
 void _showMessageInLCDDisplay(String message[])
