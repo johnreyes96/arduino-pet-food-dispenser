@@ -86,16 +86,30 @@ void _foodDispenserSequence()
   }
 }
 
-void _reproduceMusic()
-{
-  //TODO Pending to do
-}
-
 void _muteOrUnmute()
 {
   _isMute = !_isMute;
   _ledNotice();
+  if (!_isMute)
+  {
+    _piezoNotica();
+  }
   _updateMessageMuteOrUnmuteInLCD();
+}
+
+void _ledNotice()
+{
+  digitalWrite(LED, HIGH);
+  delay(150);
+  digitalWrite(LED, LOW);
+}
+
+void _piezoNotica()
+{
+  tone(PIEZO, 440, 100);
+  delay(100);
+  noTone(PIEZO);
+  digitalWrite(PIEZO, HIGH);
 }
 
 void _updateMessageMuteOrUnmuteInLCD() {
@@ -109,13 +123,6 @@ void _updateMessageMuteOrUnmuteInLCD() {
     _messages[1] = "B: Mutear       ";
   }
   _showMessageInLCDDisplay(_messages);
-}
-
-void _ledNotice()
-{
-  digitalWrite(LED, HIGH);
-  delay(150);
-  digitalWrite(LED, LOW);
 }
 
 void _showMainMessageInLCDDisplay()
@@ -137,6 +144,46 @@ void _showMessageInLCDDisplay(String message[])
 char _getKey()
 {
   return _keyboard.getKey();
+}
+
+void _reproduceMusic()
+{
+  if (!_isMute)
+  {
+    tone(PIEZO, 440, 100);
+    delay(100);
+    tone(PIEZO, 523.25, 100);
+    delay(100);
+    tone(PIEZO, 587.33, 100);
+    delay(200);
+    tone(PIEZO, 587.33, 100);
+    delay(200);
+    tone(PIEZO, 587.33, 100);
+    delay(100);
+    tone(PIEZO, 659.25, 100);
+    delay(100);
+    tone(PIEZO, 698.45, 100);
+    delay(200);
+    tone(PIEZO, 698.45, 100);
+    delay(200);
+    tone(PIEZO, 698.45, 100);
+    delay(100);
+    tone(PIEZO, 783.99, 100);
+    delay(100);
+    tone(PIEZO, 659.25, 100);
+    delay(200);
+    tone(PIEZO, 659.25, 100);
+    delay(200);
+    tone(PIEZO, 587.33, 100);
+    delay(100);
+    tone(PIEZO, 523.25, 100);
+    delay(100);
+    tone(PIEZO, 523.25, 100);
+    delay(100);
+    tone(PIEZO, 587.33, 100);
+    noTone(PIEZO);
+    digitalWrite(PIEZO, HIGH);
+  }
 }
 
 void _initServomotor()
