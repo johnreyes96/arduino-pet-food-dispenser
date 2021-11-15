@@ -22,7 +22,8 @@ byte _rowPins[ROWS] = { 7, 6, 5, 4 };
 byte _columnPins[COLUMNS] = { 3, 2, 1, 0 };
 Keypad _keyboard = Keypad(makeKeymap(KEYS), _rowPins, _columnPins, ROWS, COLUMNS);
 Servo _servoMotor;
-String messages[2];
+String _messages[2];
+boolean _isMute;
 
 void setup()
 {
@@ -30,6 +31,7 @@ void setup()
   _initLed();
   _initPiezo();
   _initLCDDisplay();
+  _isMute = false;
 }
 
 void loop()
@@ -46,12 +48,15 @@ void _executeFunctionByKeypad()
       digitalWrite(LED, LOW);
       _reproduceMusic();
       break;
+    case 'B':
+      _muteOrUnmute();
+      break;
   }
 }
 
 void _ledSequence()
 {
-  for (int index = 0; index < 9; index++)
+  for (int index = 0; index < 5; index++)
   {
     digitalWrite(LED, HIGH);
     delay(150);
@@ -63,11 +68,11 @@ void _ledSequence()
 
 void _foodDispenser()
 {
-  messages[0] = "   Dispensando  ";
-  messages[1] = "     Comida     ";
-  _showMessageInLCDDisplay(messages);
+  _messages[0] = "   Dispensando  ";
+  _messages[1] = "     Comida     ";
+  _showMessageInLCDDisplay(_messages);
   _foodDispenserSequence();
-  _showMainMessageInLCDDisplay();
+  _updateMessageMuteOrUnmuteInLCD();
 }
 
 void _foodDispenserSequence()
@@ -84,6 +89,49 @@ void _foodDispenserSequence()
 void _reproduceMusic()
 {
   //TODO Pending to do
+}
+
+void _muteOrUnmute()
+{
+  _isMute = !_isMute;
+  _ledNotice();
+  _updateMessageMuteOrUnmuteInLCD();
+}
+
+void _updateMessageMuteOrUnmuteInLCD() {
+  _messages[0] = "A: Dar alimento ";
+  if (_isMute)
+  {
+    _messages[1] = "B: Desmutear       ";
+  }
+  else
+  {
+    _messages[1] = "B: Mutear       ";
+  }
+  _showMessageInLCDDisplay(_messages);
+}
+
+void _ledNotice()
+{
+  digitalWrite(LED, HIGH);
+  delay(150);
+  digitalWrite(LED, LOW);
+}
+
+void _showMainMessageInLCDDisplay()
+{
+  lcd.setCursor(0, 0);
+  lcd.print("A: Dar alimento ");
+  lcd.setCursor(0, 1);
+  lcd.print("B: Mutear       ");
+}
+
+void _showMessageInLCDDisplay(String message[])
+{
+  lcd.setCursor(0, 0);
+  lcd.print(message[0]);
+  lcd.setCursor(0, 1);
+  lcd.print(message[1]);
 }
 
 char _getKey()
@@ -113,20 +161,4 @@ void _initLCDDisplay()
 {
   lcd.begin(16, 2);
   _showMainMessageInLCDDisplay();
-}
-
-void _showMainMessageInLCDDisplay()
-{
-  lcd.setCursor(0, 0);
-  lcd.print("A: Dar alimento ");
-  lcd.setCursor(0, 1);
-  lcd.print("                ");
-}
-
-void _showMessageInLCDDisplay(String message[])
-{
-  lcd.setCursor(0, 0);
-  lcd.print(message[0]);
-  lcd.setCursor(0, 1);
-  lcd.print(message[1]);
 }
