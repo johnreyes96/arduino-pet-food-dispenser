@@ -43,9 +43,6 @@ void _executeFunctionByKeypad()
     case 'A':
       _foodDispenser();
       break;
-    case 'B':
-      _setInitialStatus();
-      break;
   }
 }
 
