@@ -41,26 +41,33 @@ void _executeFunctionByKeypad()
 {
   switch (_getKey()) {
     case 'A':
+      _ledSequence();
       _foodDispenser();
+      digitalWrite(LED, LOW);
+      _reproduceMusic();
       break;
   }
 }
 
+void _ledSequence()
+{
+  for (int index = 0; index < 9; index++)
+  {
+    digitalWrite(LED, HIGH);
+    delay(150);
+    digitalWrite(LED, LOW);
+    delay(150);
+  }
+  digitalWrite(LED, HIGH);
+}
+
 void _foodDispenser()
 {
-  digitalWrite(LED, HIGH);
   messages[0] = "   Dispensando  ";
   messages[1] = "     Comida     ";
   _showMessageInLCDDisplay(messages);
   _foodDispenserSequence();
-  _setInitialStatus();
-}
-
-void _setInitialStatus()
-{
-  digitalWrite(LED, LOW);
   _showMainMessageInLCDDisplay();
-  _reproduceMusic();
 }
 
 void _foodDispenserSequence()
