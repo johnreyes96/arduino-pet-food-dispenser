@@ -118,7 +118,7 @@ void _initLCDDisplay()
 void _showMainMessageInLCDDisplay()
 {
   lcd.setCursor(0, 0);
-  lcd.print("A: Para abrir   ");
+  lcd.print("A: Dar alimento ");
   lcd.setCursor(0, 1);
   lcd.print("                ");
 }
