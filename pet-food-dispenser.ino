@@ -2,14 +2,15 @@
 #include <Servo.h>
 #include <LiquidCrystal.h>
 
-#define CERRAR 0
-#define ABRIR 90
+#define CLOSE 0
+#define OPEN 90
 
 LiquidCrystal lcd(A0, A1, A2, A3, A4, A5);
 const byte COLUMNS = 4;
 const byte ROWS = 4;
 const byte LED = 9;
 const byte PIEZO = 10;
+const byte FOOD_DISPENSER_ITERATORS = 3;
 const char KEYS[ROWS][COLUMNS] = 
 {
   { '1', '2', '3', 'A' },
@@ -50,20 +51,30 @@ void _executeFunctionByKeypad()
 
 void _foodDispenser()
 {
-  _servoMotor.write(ABRIR);
   digitalWrite(LED, HIGH);
   messages[0] = "   Dispensando  ";
   messages[1] = "     Comida     ";
   _showMessageInLCDDisplay(messages);
+  _foodDispenserSequence();
+  _setInitialStatus();
 }
 
 void _setInitialStatus()
 {
-  _servoMotor.write(CERRAR);
   digitalWrite(LED, LOW);
-  delay(600);
   _showMainMessageInLCDDisplay();
   _reproduceMusic();
+}
+
+void _foodDispenserSequence()
+{
+  for (int index = 0; index < FOOD_DISPENSER_ITERATORS; index++)
+  {
+    _servoMotor.write(OPEN);
+    delay(600);
+    _servoMotor.write(CLOSE);
+    delay(600);
+  }
 }
 
 void _reproduceMusic()
@@ -79,7 +90,7 @@ char _getKey()
 void _initServomotor()
 {
   _servoMotor.attach(8);
-  _servoMotor.write(CERRAR);
+  _servoMotor.write(CLOSE);
 }
 
 void _initLed()
