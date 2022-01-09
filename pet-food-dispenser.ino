@@ -8,9 +8,11 @@
 LiquidCrystal lcd(A0, A1, A2, A3, A4, A5);
 const byte COLUMNS = 4;
 const byte ROWS = 4;
+const byte SERVO = 8;
 const byte LED = 9;
 const byte PIEZO = 10;
 const byte FOOD_DISPENSER_ITERATORS = 3;
+const byte LED_SEQUENCE_ITERATORS = 5;
 const char KEYS[ROWS][COLUMNS] = 
 {
   { '1', '2', '3', 'A' },
@@ -22,7 +24,6 @@ byte _rowPins[ROWS] = { 7, 6, 5, 4 };
 byte _columnPins[COLUMNS] = { 3, 2, 1, 0 };
 Keypad _keyboard = Keypad(makeKeymap(KEYS), _rowPins, _columnPins, ROWS, COLUMNS);
 Servo _servoMotor;
-String _messages[2];
 boolean _isMute;
 
 void setup()
@@ -36,17 +37,15 @@ void setup()
 
 void loop()
 {
-  _executeFunctionByKeypad();
+  _runByKeypad();
 }
 
-void _executeFunctionByKeypad()
+void _runByKeypad()
 {
-  switch (_getKey()) {
+  switch (_getKey())
+  {
     case 'A':
-      _ledSequence();
-      _foodDispenser();
-      digitalWrite(LED, LOW);
-      _reproduceMusic();
+      _feed();
       break;
     case 'B':
       _muteOrUnmute();
@@ -54,9 +53,17 @@ void _executeFunctionByKeypad()
   }
 }
 
-void _ledSequence()
+void _feed()
 {
-  for (int index = 0; index < 5; index++)
+  _executeLedSequence();
+  _foodDispenser();
+  digitalWrite(LED, LOW);
+  _reproduceMusic();
+}
+
+void _executeLedSequence()
+{
+  for (int index = 0; index < LED_SEQUENCE_ITERATORS; index++)
   {
     digitalWrite(LED, HIGH);
     delay(150);
@@ -68,14 +75,14 @@ void _ledSequence()
 
 void _foodDispenser()
 {
-  _messages[0] = "   Dispensando  ";
-  _messages[1] = "     Comida     ";
-  _showMessageInLCDDisplay(_messages);
-  _foodDispenserSequence();
+  String messageFirstLine = "   Dispensando  ";
+  String messageSecondLine = "     Comida     ";
+  _showMessageInLCDDisplay(messageFirstLine, messageSecondLine);
+  _executeServomotorSequence();
   _updateMessageMuteOrUnmuteInLCD();
 }
 
-void _foodDispenserSequence()
+void _executeServomotorSequence()
 {
   for (int index = 0; index < FOOD_DISPENSER_ITERATORS; index++)
   {
@@ -92,7 +99,7 @@ void _muteOrUnmute()
   _ledNotice();
   if (!_isMute)
   {
-    _piezoNotica();
+    _piezoNotice();
   }
   _updateMessageMuteOrUnmuteInLCD();
 }
@@ -104,7 +111,7 @@ void _ledNotice()
   digitalWrite(LED, LOW);
 }
 
-void _piezoNotica()
+void _piezoNotice()
 {
   tone(PIEZO, 440, 100);
   delay(100);
@@ -112,33 +119,19 @@ void _piezoNotica()
   digitalWrite(PIEZO, HIGH);
 }
 
-void _updateMessageMuteOrUnmuteInLCD() {
-  _messages[0] = "A: Dar alimento ";
-  if (_isMute)
-  {
-    _messages[1] = "B: Desmutear    ";
-  }
-  else
-  {
-    _messages[1] = "B: Mutear       ";
-  }
-  _showMessageInLCDDisplay(_messages);
+void _updateMessageMuteOrUnmuteInLCD()
+{
+  String messageFirstLine = "A: Dar alimento ";
+  String messageSecondLine = _isMute ? "B: Desmutear    " : "B: Mutear       ";
+  _showMessageInLCDDisplay(messageFirstLine, messageSecondLine);
 }
 
-void _showMainMessageInLCDDisplay()
+void _showMessageInLCDDisplay(String messageFirstLine, String messageSecondLine)
 {
   lcd.setCursor(0, 0);
-  lcd.print("A: Dar alimento ");
+  lcd.print(messageFirstLine);
   lcd.setCursor(0, 1);
-  lcd.print("B: Mutear       ");
-}
-
-void _showMessageInLCDDisplay(String message[])
-{
-  lcd.setCursor(0, 0);
-  lcd.print(message[0]);
-  lcd.setCursor(0, 1);
-  lcd.print(message[1]);
+  lcd.print(messageSecondLine);
 }
 
 char _getKey()
@@ -188,7 +181,7 @@ void _reproduceMusic()
 
 void _initServomotor()
 {
-  _servoMotor.attach(8);
+  _servoMotor.attach(SERVO);
   _servoMotor.write(CLOSE);
 }
 
@@ -207,5 +200,5 @@ void _initPiezo()
 void _initLCDDisplay()
 {
   lcd.begin(16, 2);
-  _showMainMessageInLCDDisplay();
+  _updateMessageMuteOrUnmuteInLCD();
 }
