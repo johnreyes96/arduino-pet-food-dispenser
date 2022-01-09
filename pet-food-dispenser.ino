@@ -143,8 +143,6 @@ void _reproduceMusic()
 {
   if (!_isMute)
   {
-    tone(PIEZO, 440, 100);
-    delay(100);
     tone(PIEZO, 523.25, 100);
     delay(100);
     tone(PIEZO, 587.33, 100);
