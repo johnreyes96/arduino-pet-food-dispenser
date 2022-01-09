@@ -143,35 +143,15 @@ void _reproduceMusic()
 {
   if (!_isMute)
   {
-    tone(PIEZO, 523.25, 100);
-    delay(100);
-    tone(PIEZO, 587.33, 100);
-    delay(200);
-    tone(PIEZO, 587.33, 100);
-    delay(200);
-    tone(PIEZO, 587.33, 100);
-    delay(100);
-    tone(PIEZO, 659.25, 100);
-    delay(100);
-    tone(PIEZO, 698.45, 100);
-    delay(200);
-    tone(PIEZO, 698.45, 100);
-    delay(200);
-    tone(PIEZO, 698.45, 100);
-    delay(100);
-    tone(PIEZO, 783.99, 100);
-    delay(100);
-    tone(PIEZO, 659.25, 100);
-    delay(200);
-    tone(PIEZO, 659.25, 100);
-    delay(200);
-    tone(PIEZO, 587.33, 100);
-    delay(100);
-    tone(PIEZO, 523.25, 100);
-    delay(100);
-    tone(PIEZO, 523.25, 100);
-    delay(100);
-    tone(PIEZO, 587.33, 100);
+    double _musicalNotes[] = { 523.25, 587.33, 659.25, 698.45, 783.99 };
+    double _times[] = { 0, 100, 200 };
+    int _notesSequence[] = { 0, 1, 1, 1, 2, 3, 3, 3, 4, 2, 2, 1, 0, 0, 1 };
+    int _timesSequence[] = { 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 1, 0 };
+    for (int index = 0; index < 16; index++)
+    {
+      tone(PIEZO, _musicalNotes[_notesSequence[index]], 100);
+      delay(_times[_timesSequence[index]]);
+    }
     noTone(PIEZO);
     digitalWrite(PIEZO, HIGH);
   }
