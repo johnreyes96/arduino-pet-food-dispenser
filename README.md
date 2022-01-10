@@ -1,6 +1,14 @@
 # Pet food dispenser with Arduino Uno R3
 Project about pet food dispenser with Arduino Uno R3, keypad 4x4 and LCD display 16x2.
 
+![Languages](https://img.shields.io/github/languages/count/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![Repo Size](https://img.shields.io/github/repo-size/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![Issues](https://img.shields.io/github/issues/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![Pull Request](https://img.shields.io/github/issues-pr/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![License](https://img.shields.io/github/license/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![Last Commit](https://img.shields.io/github/last-commit/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![Release Date](https://img.shields.io/github/release-date/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+
 ## Content
 This project has two options:
 * Option A: The LED turns on and off for 5 times fast, then stays on while the servomotor opens the opening to let the pet food out 3 times fast, finally the LED turns off and plays a short melody.
