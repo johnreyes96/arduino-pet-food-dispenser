@@ -7,7 +7,7 @@ This project has two options:
 * Option B: Mute or unmute the piezo buzzer.
 
 ## Demo
-If you want to see the demo of this proyect deployed, you can visit [Demo of the proyect](https://www.tinkercad.com/things/9iVNfFJeRKA)
+If you want to see the demo of this proyect deployed, you can visit [Demo of the proyect](https://www.tinkercad.com/things/9iVNfFJeRKA).
 
 ## Components list
 * Arduino Uno R3
