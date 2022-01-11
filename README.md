@@ -7,6 +7,7 @@
 ![License](https://img.shields.io/github/license/johnreyes96/arduino-pet-food-dispenser?style=plastic)
 ![Last Commit](https://img.shields.io/github/last-commit/johnreyes96/arduino-pet-food-dispenser?style=plastic)
 ![Release Date](https://img.shields.io/github/release-date/johnreyes96/arduino-pet-food-dispenser?style=plastic)
+![Release Version](https://img.shields.io/github/v/release/johnreyes96/arduino-pet-food-dispenser)
 
 Project about pet food dispenser with Arduino Uno R3, keypad 4x4 and LCD display 16x2.
 
